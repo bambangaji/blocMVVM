@@ -3,18 +3,17 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:merchant_senbu/blocs/loading_bloc.dart';
 
 import 'package:merchant_senbu/blocs/navigations_bloc.dart';
 
-/// This sample app shows an app with two screens.
-///
-/// The first route '/' is mapped to [HomeScreen], and the second route
-/// '/details' is mapped to [DetailsScreen].
-///
-/// The buttons use context.go() to navigate to each destination. On mobile
-/// devices, each destination is deep-linkable and on the web, can be navigated
-/// to using the address bar.
-void main() => runApp(const MyApp());
+void main() async {
+  String fileName = '.env';
+  await dotenv.load(fileName: fileName);
+  runApp(MyApp());
+}
 
 /// The main app.
 class MyApp extends StatelessWidget {
@@ -23,8 +22,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: routerPage,
-    );
+    return BlocProvider(
+        create: (context) => LoadingBloc(),
+        child: MaterialApp.router(
+          routerConfig: routerPage,
+        ));
   }
 }

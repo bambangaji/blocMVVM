@@ -42,7 +42,7 @@ class Error {
   }
 }
 
-Error validationError(DioError e) {
+Error validationError(DioException e) {
   inspect(e);
   var error = Error(errorCode: 500, message: "");
   // ignore: unnecessary_null_comparison
